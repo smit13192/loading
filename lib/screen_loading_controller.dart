@@ -8,7 +8,7 @@ class ScreenLoadingController {
 
   LoadingController? _controller;
 
-  factory ScreenLoadingController() => _instance;
+  static ScreenLoadingController get instance => _instance;
 
   void show(BuildContext context) {
     if (_controller?.show() ?? false) {

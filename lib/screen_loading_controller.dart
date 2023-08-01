@@ -10,11 +10,21 @@ class ScreenLoadingController {
 
   static ScreenLoadingController get instance => _instance;
 
-  void show(BuildContext context) {
+  void show(
+    BuildContext context, {
+    Color? loadingColor,
+    Color? containerColor,
+    Color? backgroundColor,
+  }) {
     if (_controller?.show() ?? false) {
       return;
     } else {
-      _controller = _showLoading(context);
+      _controller = _showLoading(
+        context,
+        loadingColor: loadingColor,
+        containerColor: containerColor,
+        backgroundColor: backgroundColor,
+      );
     }
   }
 
@@ -23,22 +33,29 @@ class ScreenLoadingController {
     _controller = null;
   }
 
-  _showLoading(BuildContext context) {
+  _showLoading(
+    BuildContext context, {
+    Color? loadingColor,
+    Color? containerColor,
+    Color? backgroundColor,
+  }) {
     final state = Overlay.of(context);
     final entry = OverlayEntry(
       builder: (context) {
         return Material(
-          color: Colors.black.withAlpha(125),
+          color: backgroundColor ?? Colors.black.withAlpha(125),
           child: Center(
             child: Container(
               height: 100,
               width: 100,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: containerColor ?? Colors.white,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: const Center(
-                child: CircularProgressIndicator(),
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: loadingColor,
+                ),
               ),
             ),
           ),
